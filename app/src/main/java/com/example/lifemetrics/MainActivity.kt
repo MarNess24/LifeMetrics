@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.lifemetrics.navigation.NavManager
 import com.example.lifemetrics.ui.theme.LifeMetricsTheme
+import com.example.lifemetrics.viewModels.HistorialScreen
 import com.example.lifemetrics.views.HomeView
 import com.example.lifemetrics.views.RegistrosView
 
@@ -24,8 +25,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    //NavManager()
-                    RegistrosView()
+                    NavManager()
+
                 }
             }
         }
