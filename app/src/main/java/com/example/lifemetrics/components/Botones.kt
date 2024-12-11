@@ -55,9 +55,13 @@ fun BotonTexto() {
 }
 
 @Composable
-fun BotonOutline() {
-    OutlinedButton(onClick = { /*TODO*/ }, border = BorderStroke(3.dp, Color.Blue)) {
-        Text(text = "Mi Boton", fontSize = 30.sp)
+fun BotonOutline( onClick: () -> Unit, text: String, backgroundColor: Color, textColor: Color ) {
+    OutlinedButton(
+        onClick = onClick,
+        border = BorderStroke ( 1.dp, color = Color ( 0xFF6481C1 ) ),
+        colors = ButtonDefaults.outlinedButtonColors ( containerColor = backgroundColor )
+    ) {
+        Text ( text = text, fontSize = 15.sp, color = textColor )
     }
 }
 

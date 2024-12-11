@@ -33,12 +33,12 @@ fun Space(){
 }
 
 @Composable
-fun SpaceW(size: Dp =5.dp) {
+fun SpaceW(size: Dp = 5.dp) {
     Spacer(modifier = Modifier.width(size))
 }
 
 @Composable
-fun SpaceH(size: Dp =5.dp) {
+fun SpaceH(size: Dp = 5.dp) {
     Spacer(modifier = Modifier.height(size))
 }
 
