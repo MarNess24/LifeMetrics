@@ -68,7 +68,7 @@ fun RegistrosView() {
                 fontWeight = FontWeight.Bold,
                 color = Color ( 0xFF49688D ),
                 modifier = Modifier
-                    .padding ( start = 28.dp, top = 16.dp )
+                .padding ( start = 28.dp, top = 16.dp )
             )
 
             SpaceH ( 20.dp )
