@@ -7,7 +7,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -19,6 +25,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.lifemetrics.components.BotonIcono
 import com.example.lifemetrics.components.BotonOutline
 
 @Composable
@@ -70,7 +77,7 @@ fun PersonCard( name: String ) {
     Card (
         modifier = Modifier
             .fillMaxWidth()
-            .padding ( horizontal = 16.dp, vertical = 8.dp ),
+            .padding ( horizontal = 10.dp, vertical = 6.dp ),
         colors = CardDefaults.cardColors ( containerColor = Color ( 0xFFB0C1D9 ) )
     ) {
         Row (
@@ -83,29 +90,22 @@ fun PersonCard( name: String ) {
         ) {
             Text (
                 text = name,
-                fontSize = 18.sp,
+                fontSize = 21.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color ( 0xFF49688D )
             )
 
             Row {
                 // Botón para registrar consumo
-                BotonOutline(
-                    onClick = { /* Acción */ },
-                    text = "Registrar",
-                    backgroundColor = Color ( 0xFF6481C1 ),
-                    textColor = White
-                )
-
-                Spacer ( modifier = Modifier.width ( 8.dp ) )
+                BotonIcono ( Icons.Default.Edit )
+                Spacer ( modifier = Modifier.width ( 5.dp ) )
 
                 // Botón para acceder al historial
-                BotonOutline(
-                    onClick = { /* Acción */ },
-                    text = "Historial",
-                    backgroundColor = Color.White,
-                    textColor = Color ( 0xFF6481C1 )
-                )
+                BotonIcono ( icono = Icons.Default.DateRange )
+                Spacer ( modifier = Modifier.width ( 5.dp ) )
+
+                // Botón para eliminar el usuario
+                BotonIcono ( icono = Icons.Default.Delete )
             }
         }
     }

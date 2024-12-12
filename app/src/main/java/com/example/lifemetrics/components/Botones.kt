@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -66,13 +67,14 @@ fun BotonOutline( onClick: () -> Unit, text: String, backgroundColor: Color, tex
 }
 
 @Composable
-fun BotonIcono() {
-    IconButton(onClick = { /*TODO*/ }) {
-        Icon(
-            Icons.Filled.Star,
+fun BotonIcono( icono: ImageVector ) {
+    IconButton (
+        onClick = { /*TODO*/ } ) {
+        Icon (
+            icono,
             contentDescription = "Icono",
-            tint = Color.Red,
-            modifier = Modifier.size(50.dp)
+            tint = Color ( 0xFF49688D ),
+            modifier = Modifier.size ( 40.dp )
         )
     }
 }
