@@ -80,7 +80,7 @@ fun Login(navController: NavController) {
             color = Color.White,
             size = 15.dp
         ) {
-            navController.navigate("register") // Navega a la pantalla de registro
+            navController.navigate("register")
         }
     }
     }
