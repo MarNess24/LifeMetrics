@@ -28,7 +28,7 @@ fun ButtonFinish (currentPage: Int, navController: NavController, store: StoreBo
     ) {
         if ( currentPage == 2 ) {
             OutlinedButton ( onClick = {
-                navController.navigate("home") {
+                navController.navigate("login") {
                     popUpTo(0)
                 }
             },

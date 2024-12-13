@@ -2,12 +2,15 @@ package com.example.lifemetrics.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.lifemetrics.conexion.SessionManager
 import com.example.lifemetrics.dataStore.StoreBoarding
 import com.example.lifemetrics.viewModels.MainViewBoarding
+import com.example.lifemetrics.views.ControlDiaView
 import com.example.lifemetrics.views.DatosPacienteView
 import com.example.lifemetrics.views.HistorialScreen
 import com.example.lifemetrics.views.HomeView
@@ -22,9 +25,13 @@ fun NavManager() {
     val dataStore= StoreBoarding(context)
     val store=dataStore.getStoreBoarding.collectAsState(initial = false)
 
+    // Crear instancia de SessionManager
+    val sessionManager = remember { SessionManager(context) }
+
+
     NavHost (
         navController = navController,
-        startDestination = if (store.value == true) "home" else "Splash"
+        startDestination = if (store.value == true) "login" else "Splash"
     ) {
         composable("onBoarding") {
             MainViewBoarding(navController, dataStore)
@@ -35,7 +42,7 @@ fun NavManager() {
 //            HomeView(navController)
 //            Login(navController)
 //            HistorialScreen(navController)
-            RegistrosView()
+            RegistrosView(navController)
         }
 
         // Pantalla de Splash
@@ -45,13 +52,23 @@ fun NavManager() {
 
         // Pantalla de Login
         composable("login") {
-            Login(navController)
+            Login(navController, sessionManager)
         }
 
 
         composable("historial") {
             HistorialScreen(navController)
         }
+
+        composable("Pacientes") {
+            DatosPacienteView(navController)
+        }
+
+        composable("ControlDelDia") {
+            ControlDiaView(navController)
+        }
+
+
 
     }
 }

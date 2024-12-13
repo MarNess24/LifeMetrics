@@ -98,3 +98,5 @@ fun RegistrarView(navController: NavController) {
         }
     }
 }
+
+

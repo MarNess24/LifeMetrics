@@ -73,7 +73,7 @@ fun MainCard (titulo: String, numero: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PersonCard( name: String) {
+fun PersonCard( name: String, navController: NavController) {
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -97,15 +97,24 @@ fun PersonCard( name: String) {
 
             Row {
                 // Botón para registrar consumo
-                BotonIcono ( Icons.Default.Edit)
+                BotonIcono ( Icons.Default.Edit,
+                    onClick = {
+                        navController.navigate("ControlDelDia")
+                    })
                 Spacer ( modifier = Modifier.width ( 5.dp ) )
 
                 // Botón para acceder al historial
-                BotonIcono ( icono = Icons.Default.DateRange )
+                BotonIcono ( icono = Icons.Default.DateRange,
+                    onClick = {
+                        navController.navigate("historial")
+                    })
                 Spacer ( modifier = Modifier.width ( 5.dp ) )
 
                 // Botón para eliminar el usuario
-                BotonIcono ( icono = Icons.Default.Delete )
+                BotonIcono ( icono = Icons.Default.Delete,
+                    onClick = {
+
+                    })
             }
         }
     }

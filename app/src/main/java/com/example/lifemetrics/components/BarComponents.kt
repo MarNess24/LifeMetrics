@@ -4,8 +4,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -29,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.lifemetrics.components.BotonNormal
 
 @Composable
 fun TitleBar( name: String, textColor: Color, backgroundColor: Color, image: Int ) {
@@ -36,9 +39,9 @@ fun TitleBar( name: String, textColor: Color, backgroundColor: Color, image: Int
         modifier = Modifier
             .fillMaxWidth()
             .statusBarsPadding()
-            .background( backgroundColor )
-            .height( 150.dp )
-            .padding( 16.dp )
+            .background(backgroundColor)
+            .height(150.dp)
+            .padding(16.dp)
     ) {
         Row (
             verticalAlignment = Alignment.CenterVertically,
@@ -48,18 +51,36 @@ fun TitleBar( name: String, textColor: Color, backgroundColor: Color, image: Int
             Image (
                 painter = painterResource ( id = image ),
                 contentDescription = "Logo",
-                modifier = Modifier.size( 120.dp )
+                modifier = Modifier.size( 150.dp)
             )
 
-            Spacer ( modifier = Modifier.width ( 10.dp ) )
 
-            // Título
-            Text (
-                text = name,
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = textColor
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                // Título
+                Text (
+                    text = name,
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = textColor
+                )
+                
+                Spacer(modifier = Modifier.height( 15.dp))
+
+                MainButtonH(
+                    name = "Cerrar Sesión",
+                    backColor = Color(138,162,212),
+                    color = Color.White,
+                    size = 5.dp
+                ) {
+
+                }
+            }
+
         }
     }
 }
@@ -71,7 +92,9 @@ fun ActionButton() {
         containerColor = Color( 0xFF6481C1 ),
         contentColor = Color.White,
         shape = CircleShape,
-        modifier = Modifier.size( 80.dp ).offset(y = (-100).dp)
+        modifier = Modifier
+            .size(80.dp)
+            .offset(y = (-100).dp)
     ) {
         Icon (
             imageVector = Icons.Default.Add,

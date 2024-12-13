@@ -16,12 +16,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.lifemetrics.R
 import java.util.*
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ControlDiaView() {
+fun ControlDiaView(navController: NavController) {
     Scaffold {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(

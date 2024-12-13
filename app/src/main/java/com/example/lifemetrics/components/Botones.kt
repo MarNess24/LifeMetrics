@@ -67,17 +67,22 @@ fun BotonOutline( onClick: () -> Unit, text: String, backgroundColor: Color, tex
 }
 
 @Composable
-fun BotonIcono( icono: ImageVector) {
-    IconButton (
-        onClick = { /*TODO*/ } ) {
-        Icon (
+fun BotonIcono(
+    icono: ImageVector,
+    onClick: () -> Unit
+) {
+    IconButton(
+        onClick = onClick
+    ) {
+        Icon(
             icono,
             contentDescription = "Icono",
-            tint = Color ( 0xFF49688D ),
-            modifier = Modifier.size ( 40.dp )
+            tint = Color(0xFF49688D),
+            modifier = Modifier.size(40.dp)
         )
     }
 }
+
 
 @Composable
 fun BotonSwitch() {

@@ -23,17 +23,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.lifemetrics.R
 import com.example.navigateprojects.components.PersonCard
 import com.example.navigateprojects.components.SpaceH
 import com.example.navigateprojects.components.TitleBar
 
 @Composable
-fun RegistrosView() {
+fun RegistrosView(navController: NavController) {
     Box (
         modifier = Modifier
             .fillMaxSize()
@@ -41,11 +43,10 @@ fun RegistrosView() {
     ) {
         // Imagen de fondo
         Image (
-            painter = painterResource ( id = R.drawable.item2 ),
-            contentDescription = "Detalle izquierdo",
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomStart)
+            painter = painterResource(id = R.drawable.item2),
+            contentDescription = "Imagen1",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
         )
 
         Column (
@@ -74,12 +75,12 @@ fun RegistrosView() {
             SpaceH ( 20.dp )
 
             // Usuarios registrados desde la cuenta actual
-            Registros()
+            Registros(navController)
         }
 
         // Botón "Agregar"
         FloatingActionButton (
-            onClick = { /* Códigou */ },
+            onClick = { navController.navigate("Pacientes") },
             containerColor = Color ( 0xFF6481C1 ),
             contentColor = Color.White,
             shape = CircleShape,
@@ -108,7 +109,7 @@ fun RegistrosView() {
 }
 
 @Composable
-fun Registros() {
+fun Registros( navController: NavController) {
     // Registros del usuario actual
     val people = listOf ( "Menganito", "María", "Luna", "Mariana", "Scar", "Karla", "Secretaria" )
 
@@ -124,7 +125,7 @@ fun Registros() {
             verticalArrangement = Arrangement.spacedBy ( 8.dp )
         ) {
             items ( people ) { name ->
-                PersonCard ( name = name )
+                PersonCard ( name = name , navController )
             }
         }
     }

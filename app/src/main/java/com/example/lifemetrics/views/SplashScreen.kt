@@ -21,7 +21,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(navController: NavController, store: Boolean?){
     var screen by remember { mutableStateOf("") }
-    screen=if (store == true) "home" else "onBoarding"
+    screen=if (store == true) "login" else "onBoarding"
 
     LaunchedEffect(key1 = true) {
         delay(2000)
