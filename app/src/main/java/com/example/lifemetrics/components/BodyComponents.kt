@@ -43,7 +43,7 @@ fun SpaceH(size: Dp =5.dp) {
 }
 
 @Composable
-fun MainButton(name:String, backColor: Color, color: Color, onClick:() -> Unit){
+fun MainButton(name:String, backColor: Color, color: Color, size: Dp, onClick:() -> Unit){
     Button(onClick = onClick, colors = ButtonDefaults.buttonColors(
         contentColor = color,
         containerColor = backColor

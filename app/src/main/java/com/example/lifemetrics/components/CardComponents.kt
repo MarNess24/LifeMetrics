@@ -65,19 +65,27 @@ fun MainCard (titulo: String, numero: String, modifier: Modifier = Modifier)
 }
 
 @Composable
-fun CardHistorial(titulo: String, numero: String, modifier: Modifier = Modifier) {
+fun CardHistorial(fecha: String, Hora: String, glucosa: String, ArterialS: String, ArterialD: String ,modifier: Modifier = Modifier) {
     Card(
-        modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFE6EBF5)) // Fondo azul claro
+        modifier = modifier
+            .fillMaxWidth(0.9f)
+            .padding(vertical = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFE6EBF5))
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start,
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(text = titulo, color = Color.Black, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Text(text = fecha, color = Color.Black, fontSize = 16.sp, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = numero, color = Color.Black, fontSize = 16.sp)
+            Text(text = Hora, color = Color.Black, fontSize = 16.sp)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = glucosa, color = Color.Black, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = ArterialS, color = Color.Black, fontSize = 16.sp)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = ArterialD, color = Color.Black, fontSize = 16.sp)
         }
     }
 }

@@ -8,7 +8,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.lifemetrics.dataStore.StoreBoarding
 import com.example.lifemetrics.viewModels.MainViewBoarding
+import com.example.lifemetrics.views.HistorialScreen
 import com.example.lifemetrics.views.HomeView
+import com.example.lifemetrics.views.Login
+import com.example.lifemetrics.views.Registro
 import com.example.lifemetrics.views.RegistrosView
 import com.example.lifemetrics.views.SplashScreen
 
@@ -23,16 +26,51 @@ fun NavManager() {
         navController = navController,
         startDestination = if (store.value == true) "home" else "Splash"
     ) {
-        composable("onBoarding"){
-            MainViewBoarding(navController,dataStore)
+//        composable("onBoarding"){
+//            MainViewBoarding(navController,dataStore)
+//        }
+//
+//        composable("home"){
+//            //HomeView(navController)
+//            //HistorialScreen(navController)
+//            Login(navController)
+//            //Registro(navController)
+//        }
+//
+//        composable("Splash"){
+//            SplashScreen(navController, store.value)
+//        }
+
+        composable("onBoarding") {
+            MainViewBoarding(navController, dataStore)
         }
 
-        composable("home"){
-            HomeView(navController)
+        // Pantalla de Inicio (Home)
+        composable("home") {
+//            HomeView(navController)
+            Login(navController)
+//            HistorialScreen(navController)
         }
 
-        composable("Splash"){
+        // Pantalla de Splash
+        composable("Splash") {
             SplashScreen(navController, store.value)
         }
+
+        // Pantalla de Login
+        composable("login") {
+            Login(navController)
         }
+
+
+        composable("register") {
+            Registro(navController)
+        }
+
+
+        composable("historial") {
+            HistorialScreen(navController)
+        }
+
+    }
 }
