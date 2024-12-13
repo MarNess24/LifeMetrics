@@ -23,7 +23,7 @@ fun Login(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
     ) {
-//
+
         Image(
             painter = painterResource(id = R.drawable.item1),
             contentDescription = "Imagen1",
