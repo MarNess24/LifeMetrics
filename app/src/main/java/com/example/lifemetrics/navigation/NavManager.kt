@@ -48,11 +48,6 @@ fun NavManager() {
         }
 
 
-        composable("register") {
-            Registro(navController)
-        }
-
-
         composable("historial") {
             HistorialScreen(navController)
         }
