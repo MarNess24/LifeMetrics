@@ -67,7 +67,7 @@ fun BotonOutline( onClick: () -> Unit, text: String, backgroundColor: Color, tex
 }
 
 @Composable
-fun BotonIcono( icono: ImageVector ) {
+fun BotonIcono( icono: ImageVector) {
     IconButton (
         onClick = { /*TODO*/ } ) {
         Icon (

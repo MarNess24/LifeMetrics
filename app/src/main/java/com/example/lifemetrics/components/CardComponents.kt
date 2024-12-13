@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.lifemetrics.components.BotonIcono
 
 @Composable
@@ -72,7 +73,7 @@ fun MainCard (titulo: String, numero: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PersonCard( name: String ) {
+fun PersonCard( name: String) {
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -96,7 +97,7 @@ fun PersonCard( name: String ) {
 
             Row {
                 // Botón para registrar consumo
-                BotonIcono ( Icons.Default.Edit )
+                BotonIcono ( Icons.Default.Edit)
                 Spacer ( modifier = Modifier.width ( 5.dp ) )
 
                 // Botón para acceder al historial
@@ -106,6 +107,32 @@ fun PersonCard( name: String ) {
                 // Botón para eliminar el usuario
                 BotonIcono ( icono = Icons.Default.Delete )
             }
+        }
+    }
+}
+
+@Composable
+fun CardHistorial(fecha: String, Hora: String, glucosa: String, ArterialS: String, ArterialD: String ,modifier: Modifier = Modifier) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth(0.9f)
+            .padding(vertical = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFE6EBF5))
+    ) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start,
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(text = fecha, color = Color.Black, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = Hora, color = Color.Black, fontSize = 16.sp)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = glucosa, color = Color.Black, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = ArterialS, color = Color.Black, fontSize = 16.sp)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = ArterialD, color = Color.Black, fontSize = 16.sp)
         }
     }
 }

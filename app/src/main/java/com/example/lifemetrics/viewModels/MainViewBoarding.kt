@@ -22,25 +22,27 @@ fun MainViewBoarding(navController: NavController, store: StoreBoarding) {
 
     items.add(
         PageData(
-            R.raw.page1,
-            "Bienvenido",
-            "Bienvenidos a la aplicación para mostrar el uso de onBoarding."
+            R.raw.page2,
+            "LifeMetrics",
+            "Bienvenido a LifeMetric una aplicación para ayudar a tu salud"
         )
     )
 
     items.add(
         PageData(
-            R.raw.page2,
-            "Uso de onBoarding",
-            "Esta es la segunda página de onBoarding mostrando una descripción."
+            R.raw.page1,
+            "Pasos a seguir",
+            "-Registra a los pacientes que desees\n" +
+                    "-Ingresa sus datos\n" +
+                    "-Lleva el control de su salud dia con dia\n"
         )
     )
 
     items.add(
         PageData(
             R.raw.page3,
-            "Fin de Boarding",
-            "Esta es la página final del Boarding y ya debe aparecer el botón."
+            "Terminar",
+            "Gracias por elegir nuestra app."
         )
     )
 
