@@ -18,6 +18,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +30,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.lifemetrics.actividad.eliminarPaciente
 import com.example.lifemetrics.components.BotonIcono
+import com.example.lifemetrics.conexion.SessionManager
+import com.example.lifemetrics.data.Paciente
 
 @Composable
 fun DosTarjetas(titulo1: String, numero1: String, titulo2: String, numero2: String) {
@@ -73,52 +80,59 @@ fun MainCard (titulo: String, numero: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PersonCard( name: String, navController: NavController) {
-    Card (
+fun PersonCard(
+    name: String,
+    navController: NavController,
+    id: String,
+    sessionManager: SessionManager,
+    onEliminar: (String) -> Unit // Función para manejar la eliminación
+) {
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding ( horizontal = 10.dp, vertical = 6.dp ),
-        colors = CardDefaults.cardColors ( containerColor = Color ( 0xFFB0C1D9 ) )
+            .padding(horizontal = 10.dp, vertical = 6.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFB0C1D9))
     ) {
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height ( 72.dp )
-                .padding ( 16.dp ),
+                .height(72.dp)
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text (
+            Text(
                 text = name,
                 fontSize = 21.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color ( 0xFF49688D )
+                color = Color(0xFF49688D)
             )
 
             Row {
                 // Botón para registrar consumo
-                BotonIcono ( Icons.Default.Edit,
-                    onClick = {
-                        navController.navigate("ControlDelDia")
-                    })
-                Spacer ( modifier = Modifier.width ( 5.dp ) )
+                BotonIcono(
+                    Icons.Default.Edit,
+                    onClick = { navController.navigate("ControlDelDia") }
+                )
+                Spacer(modifier = Modifier.width(5.dp))
 
                 // Botón para acceder al historial
-                BotonIcono ( icono = Icons.Default.DateRange,
-                    onClick = {
-                        navController.navigate("historial")
-                    })
-                Spacer ( modifier = Modifier.width ( 5.dp ) )
+                BotonIcono(
+                    icono = Icons.Default.DateRange,
+                    onClick = { navController.navigate("historial") }
+                )
+                Spacer(modifier = Modifier.width(5.dp))
 
                 // Botón para eliminar el usuario
-                BotonIcono ( icono = Icons.Default.Delete,
-                    onClick = {
-
-                    })
+                BotonIcono(
+                    icono = Icons.Default.Delete,
+                    onClick = { onEliminar(id) } // Llama a la función onEliminar con el id
+                )
             }
         }
     }
 }
+
 
 @Composable
 fun CardHistorial(fecha: String, Hora: String, glucosa: String, ArterialS: String, ArterialD: String ,modifier: Modifier = Modifier) {

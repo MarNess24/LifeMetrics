@@ -22,27 +22,32 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.lifemetrics.R
+import com.example.lifemetrics.actividad.registrarPaciente
+import com.example.lifemetrics.conexion.SessionManager
+import com.example.lifemetrics.data.Paciente
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun DatosPacienteView(navController: NavController) {
+fun DatosPacienteView(navController: NavController, sessionManager: SessionManager) {
 
     var nombre by remember { mutableStateOf("") }
     var edad by remember { mutableStateOf("") }
     var sexo by remember { mutableStateOf("") }
-    var talla by remember { mutableStateOf("") }
+    var altura by remember { mutableStateOf("") }
     var peso by remember { mutableStateOf("") }
     var medicamento by remember { mutableStateOf("") }
     var veces by remember { mutableStateOf("") }
     var horas by remember { mutableStateOf("") }
+    var mensajeError by remember { mutableStateOf("") }
+    var mensajeExito by remember { mutableStateOf("") }
 
 
     var expandedSexo by remember { mutableStateOf(false) }
     val optionsSexo = listOf("Hombre", "Mujer", "Otro")
 
-    var expandedTalla by remember { mutableStateOf(false) }
-    val optionsTalla = listOf("Extra chica", "Chica", "Mediana", "Grande", "Extra grande")
+//    var expandedTalla by remember { mutableStateOf(false) }
+//    val optionsTalla = listOf("Extra chica", "Chica", "Mediana", "Grande", "Extra grande")
 
     // Funciones para validar cada campo
     fun validateNombre(value: String): String {
@@ -64,7 +69,7 @@ fun DatosPacienteView(navController: NavController) {
 
     fun validatePeso(value: String): String {
         // Expresión regular para aceptar números enteros o decimales (con un punto)
-        return if (value.isEmpty() || value.matches(Regex("^[0-9]*\\.?[0-9]*$"))) {
+        return if (value.isEmpty() || value.matches(Regex("^[0-9]*^[0-9]*\\.?[0-9]*$"))) {
             value // Si es válido, regresa el valor
         } else {
             peso // Si no es válido, mantiene el valor anterior
@@ -129,62 +134,36 @@ fun DatosPacienteView(navController: NavController) {
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                     OutlinedTextField(
                         value = sexo,
-                        onValueChange = { },
+                        onValueChange = { sexo = it },
                         label = { Text("Sexo") },
-                        modifier = Modifier //.align(Alignment.CenterHorizontally)
-                            .clickable { expandedSexo = true },
+                        //modifier = Modifier //.align(Alignment.CenterHorizontally)
+                            //.clickable { expandedSexo = true },
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             focusedBorderColor = Color(0xFF49688d),
                             unfocusedBorderColor = Color(0xFF8aa2d4),
                             focusedLabelColor = Color(0xFF49688d),
                             unfocusedLabelColor = Color(0xFF8aa2d4), ),
-                        readOnly = true
+                        readOnly = false
                     )
-                    DropdownMenu(
-                        expanded = expandedSexo,
-                        onDismissRequest = { expandedSexo = false }
-                    ) {
-                        optionsSexo.forEach { label ->
-                            DropdownMenuItem(
-                                text = { Text(label) },
-                                onClick = {
-                                    sexo = label
-                                    expandedSexo = false
-                                }
-                            )
-                        }
-                    }
+
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                     OutlinedTextField(
-                        value = talla,
-                        onValueChange = { },
-                        label = { Text("Talla") },
-                        modifier = Modifier //.align(Alignment.CenterHorizontally)
-                            .clickable { expandedTalla = true },
+                        value = altura,
+                        onValueChange = { altura = it},
+                        label = { Text("Altura") },
+                        //modifier = Modifier //.align(Alignment.CenterHorizontally)
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             focusedBorderColor = Color(0xFF49688d),
                             unfocusedBorderColor = Color(0xFF8aa2d4),
                             focusedLabelColor = Color(0xFF49688d),
                             unfocusedLabelColor = Color(0xFF8aa2d4), ),
-                        readOnly = true
+                        readOnly = false
                     )
-                    DropdownMenu(
-                        expanded = expandedTalla,
-                        onDismissRequest = { expandedTalla = false }
-                    ) {
-                        optionsTalla.forEach { label ->
-                            DropdownMenuItem(
-                                text = { Text(label) },
-                                onClick = {
-                                    talla = label
-                                    expandedTalla = false
-                                }
-                            )
-                        }
-                    }
+
+
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -202,48 +181,80 @@ fun DatosPacienteView(navController: NavController) {
                     )
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
-                OutlinedTextField(
-                    value = medicamento,
-                    onValueChange = { medicamento = it },
-                    label = { Text("Medicamento que ingiere") },
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Color(0xFF49688d),
-                        unfocusedBorderColor = Color(0xFF8aa2d4),
-                        focusedLabelColor = Color(0xFF49688d),
-                        unfocusedLabelColor = Color(0xFF8aa2d4),
-                    )
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                OutlinedTextField(
-                    value = veces,
-                    onValueChange = { veces = validateVeces(it) },
-                    label = { Text("Veces al día que se ingiere") },
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Color(0xFF49688d),
-                        unfocusedBorderColor = Color(0xFF8aa2d4),
-                        focusedLabelColor = Color(0xFF49688d),
-                        unfocusedLabelColor = Color(0xFF8aa2d4),
-                    )
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                OutlinedTextField(
-                    value = horas,
-                    onValueChange = { horas = validateHoras(it) },
-                    label = { Text("¿Cuántas horas?") },
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Color(0xFF49688d),
-                        unfocusedBorderColor = Color(0xFF8aa2d4),
-                        focusedLabelColor = Color(0xFF49688d),
-                        unfocusedLabelColor = Color(0xFF8aa2d4),
-                    )
-                )
+//                Spacer(modifier = Modifier.height(16.dp))
+//                OutlinedTextField(
+//                    value = medicamento,
+//                    onValueChange = { medicamento = it },
+//                    label = { Text("Medicamento que ingiere") },
+//                    modifier = Modifier.align(Alignment.CenterHorizontally),
+//                    colors = TextFieldDefaults.outlinedTextFieldColors(
+//                        focusedBorderColor = Color(0xFF49688d),
+//                        unfocusedBorderColor = Color(0xFF8aa2d4),
+//                        focusedLabelColor = Color(0xFF49688d),
+//                        unfocusedLabelColor = Color(0xFF8aa2d4),
+//                    )
+//                )
+//                Spacer(modifier = Modifier.height(16.dp))
+//                OutlinedTextField(
+//                    value = veces,
+//                    onValueChange = { veces = validateVeces(it) },
+//                    label = { Text("Veces al día que se ingiere") },
+//                    modifier = Modifier.align(Alignment.CenterHorizontally),
+//                    colors = TextFieldDefaults.outlinedTextFieldColors(
+//                        focusedBorderColor = Color(0xFF49688d),
+//                        unfocusedBorderColor = Color(0xFF8aa2d4),
+//                        focusedLabelColor = Color(0xFF49688d),
+//                        unfocusedLabelColor = Color(0xFF8aa2d4),
+//                    )
+//                )
+//                Spacer(modifier = Modifier.height(16.dp))
+//                OutlinedTextField(
+//                    value = horas,
+//                    onValueChange = { horas = validateHoras(it) },
+//                    label = { Text("¿Cuántas horas?") },
+//                    modifier = Modifier.align(Alignment.CenterHorizontally),
+//                    colors = TextFieldDefaults.outlinedTextFieldColors(
+//                        focusedBorderColor = Color(0xFF49688d),
+//                        unfocusedBorderColor = Color(0xFF8aa2d4),
+//                        focusedLabelColor = Color(0xFF49688d),
+//                        unfocusedLabelColor = Color(0xFF8aa2d4),
+//                    )
+//                )
                 Spacer(modifier = Modifier.height(32.dp))
                 Button(
-                    onClick = { /* Acción para registrar */ },
+                    onClick = {
+                        if (nombre.isNotBlank() && edad.isNotBlank() && sexo.isNotBlank() && altura.isNotBlank() &&
+                            peso.isNotBlank()
+                        ) {
+                            val token = sessionManager.getToken()
+                            if (token != null) {
+                                registrarPaciente(
+                                    token,
+                                    Paciente(
+                                        nombre = nombre,
+                                        edad = edad,
+                                        sexo = sexo,
+                                        altura = altura,
+                                        peso = peso,
+                                        id = "0"
+                                    ),
+                                    onSuccess = {
+                                        mensajeExito = "Paciente registrado exitosamente"
+                                        mensajeError = ""
+                                        navController.navigate("home")
+                                    },
+                                    onError = {
+                                        mensajeError = it
+                                        mensajeExito = ""
+                                    }
+                                )
+                            } else {
+                                mensajeError = "Sesión no válida. Por favor, inicia sesión de nuevo."
+                            }
+                        } else {
+                            mensajeError = "Por favor completa todos los campos"
+                        }
+                    },
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF8aa2d4)
@@ -255,7 +266,27 @@ fun DatosPacienteView(navController: NavController) {
                         fontSize = 24.sp
                     )
                 }
+
+                Spacer(modifier = Modifier.height(32.dp))
+
+                // Mostrar mensajes de error o éxito
+                if (mensajeExito.isNotEmpty()) {
+                    Text(
+                        text = mensajeExito,
+                        color = Color.Green,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
+                if (mensajeError.isNotEmpty()) {
+                    Text(
+                        text = mensajeError,
+                        color = Color.Red,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(100.dp))  // Asegúrate de dejar espacio suficiente antes de la imagen
+
             }
             Image(
                 painter = painterResource(id = R.drawable.piepagcontroldia),

@@ -183,18 +183,12 @@ fun Login(navController: NavController, sessionManager: SessionManager) {
 
             // Botón para registrarse
             MainButtonH(
-                name = "Registrarte",
+                name = "Registrarse",
                 backColor = Color(138, 162, 212),
                 color = Color.White,
                 size = 15.dp
             ) {
-                if (email.isNotBlank() && contrasena.isNotBlank()) {
-                    registrarse(email, contrasena, sessionManager, navController, onError = {
-                        errorMessage = it
-                    })
-                } else {
-                    errorMessage = "Por favor completa todos los campos"
-                }
+                navController.navigate("register")
             }
         }
     }

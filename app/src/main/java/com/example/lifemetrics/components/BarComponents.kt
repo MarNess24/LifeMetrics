@@ -31,10 +31,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.lifemetrics.actividad.cerrarSesion
 import com.example.lifemetrics.components.BotonNormal
+import com.example.lifemetrics.conexion.SessionManager
 
 @Composable
-fun TitleBar( name: String, textColor: Color, backgroundColor: Color, image: Int ) {
+fun TitleBar( name: String, textColor: Color, backgroundColor: Color, image: Int , navController: NavController, sessionManager: SessionManager) {
     Box (
         modifier = Modifier
             .fillMaxWidth()
@@ -77,7 +80,7 @@ fun TitleBar( name: String, textColor: Color, backgroundColor: Color, image: Int
                     color = Color.White,
                     size = 5.dp
                 ) {
-
+                    cerrarSesion(navController, sessionManager)
                 }
             }
 

@@ -15,6 +15,7 @@ import com.example.lifemetrics.views.DatosPacienteView
 import com.example.lifemetrics.views.HistorialScreen
 import com.example.lifemetrics.views.HomeView
 import com.example.lifemetrics.views.Login
+import com.example.lifemetrics.views.RegistrarView
 import com.example.lifemetrics.views.RegistrosView
 import com.example.lifemetrics.views.SplashScreen
 
@@ -42,7 +43,7 @@ fun NavManager() {
 //            HomeView(navController)
 //            Login(navController)
 //            HistorialScreen(navController)
-            RegistrosView(navController)
+            RegistrosView(navController, sessionManager)
         }
 
         // Pantalla de Splash
@@ -61,11 +62,16 @@ fun NavManager() {
         }
 
         composable("Pacientes") {
-            DatosPacienteView(navController)
+            DatosPacienteView(navController, sessionManager)
         }
 
         composable("ControlDelDia") {
             ControlDiaView(navController)
+        }
+
+        // Pantalla de Login
+        composable("register") {
+            RegistrarView(navController, sessionManager)
         }
 
 

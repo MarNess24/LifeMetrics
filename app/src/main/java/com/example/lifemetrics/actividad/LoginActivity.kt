@@ -86,3 +86,11 @@ fun registrarse(
     })
 }
 
+fun cerrarSesion(navController: NavController, sessionManager: SessionManager) {
+    sessionManager.clearSession() // Limpiar el token almacenado
+    navController.navigate("login") {
+        popUpTo("home") { inclusive = true } // Redirigir al login y limpiar la pila de navegación
+    }
+}
+
+
