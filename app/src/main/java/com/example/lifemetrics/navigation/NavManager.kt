@@ -26,21 +26,6 @@ fun NavManager() {
         navController = navController,
         startDestination = if (store.value == true) "home" else "Splash"
     ) {
-//        composable("onBoarding"){
-//            MainViewBoarding(navController,dataStore)
-//        }
-//
-//        composable("home"){
-//            //HomeView(navController)
-//            //HistorialScreen(navController)
-//            Login(navController)
-//            //Registro(navController)
-//        }
-//
-//        composable("Splash"){
-//            SplashScreen(navController, store.value)
-//        }
-
         composable("onBoarding") {
             MainViewBoarding(navController, dataStore)
         }
