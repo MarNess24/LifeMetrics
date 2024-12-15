@@ -6,7 +6,7 @@ import com.example.lifemetrics.data.PacienteApi
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
+//
 fun registrarPaciente(
     token: String,
     paciente: Paciente,
