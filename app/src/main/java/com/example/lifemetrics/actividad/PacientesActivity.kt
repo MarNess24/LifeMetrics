@@ -6,7 +6,7 @@ import com.example.lifemetrics.data.PacienteApi
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-//
+//h
 fun registrarPaciente(
     token: String,
     paciente: Paciente,
@@ -29,7 +29,7 @@ fun registrarPaciente(
         }
     })
 }
-//
+
 fun obtenerPacientes(
     token: String,
     onSuccess: (List<Paciente>) -> Unit,
