@@ -29,7 +29,7 @@ fun registrarPaciente(
         }
     })
 }
-
+//
 fun obtenerPacientes(
     token: String,
     onSuccess: (List<Paciente>) -> Unit,
