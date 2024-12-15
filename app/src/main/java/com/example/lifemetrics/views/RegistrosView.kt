@@ -1,5 +1,6 @@
 package com.example.lifemetrics.views
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -96,9 +97,9 @@ fun RegistrosView(navController: NavController, sessionManager: SessionManager) 
             contentColor = Color.White,
             shape = CircleShape,
             modifier = Modifier
-                .size ( 80.dp )
-                .align ( Alignment.BottomEnd )
-                .offset ( y = -85.dp, x = -40.dp )
+                .size(80.dp)
+                .align(Alignment.BottomEnd)
+                .offset(y = -85.dp, x = -40.dp)
         ) {
             Icon (
                 imageVector = Icons.Default.Add,
@@ -113,8 +114,8 @@ fun RegistrosView(navController: NavController, sessionManager: SessionManager) 
             fontSize = 20.sp,
             color = Color ( 0xFF49688D ),
             modifier = Modifier
-                .align ( Alignment.BottomEnd )
-                .padding ( end = 43.dp, bottom = 170.dp )
+                .align(Alignment.BottomEnd)
+                .padding(end = 43.dp, bottom = 170.dp)
         )
     }
 }
@@ -166,6 +167,10 @@ fun Registros(navController: NavController, sessionManager: SessionManager) {
                         name = paciente.nombre ?: "Sin nombre",
                         navController = navController,
                         id = paciente.id,
+                        edad = paciente.edad,
+                        sexo = paciente.sexo,
+                        peso = paciente.peso,
+                        altura = paciente.altura,
                         sessionManager = sessionManager,
                         onEliminar = { id ->
                             eliminarPaciente(
@@ -178,7 +183,12 @@ fun Registros(navController: NavController, sessionManager: SessionManager) {
                                     errorMessage = mensajeError // Mostrar error si ocurre
                                 }
                             )
-                        }
+                        },
+                            onHistorial = { id, nombre, edad, sexo, peso, altura ->
+                                val encodedNombre = Uri.encode(nombre)
+                                navController.navigate("historial/$id/$encodedNombre/$edad/$sexo/$peso/$altura")
+                                          },
+                        onRegistro = {id -> navController.navigate("ControlDelDia/${id}")}
                     )
                 }
             }

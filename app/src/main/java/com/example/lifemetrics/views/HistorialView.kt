@@ -11,11 +11,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -25,10 +32,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.lifemetrics.R
+import com.example.lifemetrics.actividad.obtenerRegistros
+import com.example.lifemetrics.data.Registro
 import com.example.navigateprojects.components.CardHistorial
 
 @Composable
-fun HistorialScreen(navController: NavController) {
+fun HistorialScreen(navController: NavController, id: String, nombre: String, edad: String, sexo: String, peso: String, altura: String) {
+    var registros by remember { mutableStateOf<List<Registro>>(emptyList()) }
+    var errorMessage by remember { mutableStateOf("") }
+
+    LaunchedEffect(Unit) {
+        obtenerRegistros(
+            pacienteId = id,
+            onSuccess = { registros = it },
+            onError = { errorMessage = it }
+        )
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -48,9 +68,9 @@ fun HistorialScreen(navController: NavController) {
                 .padding(16.dp)
         ) {
 
-            Box(
+            IconButton(
+                onClick = { navController.popBackStack() },
                 modifier = Modifier
-                    .clickable { navController.popBackStack() }
                     .padding(bottom = 16.dp)
             ) {
                 Icon(
@@ -60,6 +80,7 @@ fun HistorialScreen(navController: NavController) {
                     modifier = Modifier.size(30.dp)
                 )
             }
+
 
             Text(
                 text = "HISTORIAL",
@@ -71,45 +92,42 @@ fun HistorialScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             Column {
-                Text(text = "Nombre: María", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
-                Text(text = "Edad: 65", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
-                Text(text = "Sexo: Mujer", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
-                Text(text = "Altura: 1.56m", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
+                Text(text = "Nombre: ${nombre}", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
+                Text(text = "Edad: ${edad}", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
+                Text(text = "Sexo: ${sexo}", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
+                Text(text = "Peso: ${peso}", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
+                Text(text = "Altura: ${altura}m", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Lista de registros
+            if (errorMessage.isNotEmpty()) {
+                Text(
+                    text = errorMessage,
+                    color = Color.Red,
+                    modifier = Modifier.padding(8.dp)
+                )
+            } else if (registros.isEmpty()) {
+                Text(
+                    text = "No hay registros disponibles",
+                    color = Color.Gray,
+                    modifier = Modifier.padding(8.dp)
+                )
+            } else {
 
-            LazyColumn(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                items(2) { index ->
-                    CardHistorial(
-                        fecha = "Fecha: 02/12/2003",
-                        Hora = "Nivel de glucosa: 200 (mg/dL)",
-                        glucosa = "Hora: ${if (index == 0) "8:00 a.m" else "4:00 a.m"}",
-                        ArterialS = "Presión arterial Sistólica: ",
-                        ArterialD = "Presión arterial Diastólica: ",
-                        modifier = Modifier.padding(bottom = 10.dp)
-                    )
-
-                    CardHistorial(
-                        fecha = "Fecha: 02/12/2003",
-                        Hora = "Nivel de glucosa: 200 (mg/dL)",
-                        glucosa = "Hora: ${if (index == 0) "8:00 a.m" else "4:00 a.m"}",
-                        ArterialS = "Presión arterial Sistólica: ",
-                        ArterialD = "Presión arterial Diastólica: ",
-                        modifier = Modifier.padding(bottom = 10.dp)
-                    )
-
-                    CardHistorial(
-                        fecha = "Fecha: 02/12/2003",
-                        Hora = "Nivel de glucosa: 200 (mg/dL)",
-                        glucosa = "Hora: ${if (index == 0) "8:00 a.m" else "4:00 a.m"}",
-                        ArterialS = "Presión arterial Sistólica: ",
-                        ArterialD = "Presión arterial Diastólica: ",
-                        modifier = Modifier.padding(bottom = 10.dp)
-                    )
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(registros) { Registro ->
+                        CardHistorial(
+                            fecha = "",
+                            Hora = "",
+                            glucosa = "",
+                            ArterialS = "",//Registro.presionSistolica,
+                            ArterialD = "",//Registro.presionDiastolica
+                        )
+                    }
                 }
             }
         }

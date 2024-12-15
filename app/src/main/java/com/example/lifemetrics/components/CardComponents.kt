@@ -84,8 +84,14 @@ fun PersonCard(
     name: String,
     navController: NavController,
     id: String,
+    edad: String,
+    sexo: String,
+    peso: String,
+    altura: String,
     sessionManager: SessionManager,
-    onEliminar: (String) -> Unit // Función para manejar la eliminación
+    onEliminar: (String) -> Unit,  // Función para manejar la eliminación
+    onHistorial: (String, String, String, String, String, String) -> Unit,  // Función para manejar el historial
+    onRegistro: (String) -> Unit    // Función para manejar los registros
 ) {
     Card(
         modifier = Modifier
@@ -112,14 +118,14 @@ fun PersonCard(
                 // Botón para registrar consumo
                 BotonIcono(
                     Icons.Default.Edit,
-                    onClick = { navController.navigate("ControlDelDia") }
+                    onClick = { onRegistro(id)}
                 )
                 Spacer(modifier = Modifier.width(5.dp))
 
                 // Botón para acceder al historial
                 BotonIcono(
                     icono = Icons.Default.DateRange,
-                    onClick = { navController.navigate("historial") }
+                    onClick = { onHistorial(id, name, edad, sexo, peso, altura) }
                 )
                 Spacer(modifier = Modifier.width(5.dp))
 

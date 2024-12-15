@@ -18,11 +18,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.lifemetrics.R
+import com.example.lifemetrics.actividad.enviarRegistro
 import java.util.*
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ControlDiaView(navController: NavController) {
+fun ControlDiaView(navController: NavController, id: String) {
     Scaffold {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(
@@ -36,7 +37,7 @@ fun ControlDiaView(navController: NavController) {
                     contentDescription = "registro",
                     modifier = Modifier.size(250.dp)  // Ajusta el tamaño de la imagen
                 )
-                ContentControlDiaView()
+                ContentControlDiaView(navController, id)
             }
             Image(
                 painter = painterResource(id = R.drawable.piepagcontroldia),
@@ -52,7 +53,7 @@ fun ControlDiaView(navController: NavController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContentControlDiaView() {
+fun ContentControlDiaView(navController: NavController, id: String) {
     //var isChecked by remember { mutableStateOf(false) }
     //var isChecked2 by remember { mutableStateOf(false) }
 
@@ -63,6 +64,9 @@ fun ContentControlDiaView() {
     var glucosa by remember { mutableStateOf("") }
     var presionsistolica by remember { mutableStateOf("") }
     var presiondiastolica by remember { mutableStateOf("") }
+    var mensajeError by remember { mutableStateOf("") }
+    var mensajeExito by remember { mutableStateOf("") }
+
 
 
     // Función para mostrar el DatePicker
@@ -177,7 +181,27 @@ fun ContentControlDiaView() {
             )
 
             Spacer(modifier = Modifier.height(32.dp))
-            Button(onClick = { /* Acción para registrar */ },
+            Button(onClick = {
+                enviarRegistro(
+                    pacienteId = id,
+                    fecha = fecha,
+                    hora = hora,
+                    glucosa = glucosa,
+                    presionSistolica = presionsistolica,
+                    presionDiastolica = presiondiastolica,
+                    onSuccess = {
+                        // Mensaje de éxito o navegación
+                        mensajeExito = "Registro registrado exitosamente"
+                        mensajeError = ""
+                        navController.popBackStack()
+                    },
+                    onError = { errorMessage ->
+                        mensajeError = errorMessage
+                        mensajeExito = ""
+                        // Muestra un mensaje de error (opcionalmente puedes agregar un Snackbar)
+                        //println("Error: $errorMessage")
+                    })
+            },
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF8aa2d4)
@@ -188,6 +212,23 @@ fun ContentControlDiaView() {
                     fontSize = 24.sp
                 )
                 Spacer(modifier = Modifier.height(5.dp)) // Añadir un espacio antes de la imagen
+                // Mostrar mensajes de error o éxito
+                if (mensajeExito.isNotEmpty()) {
+                    Text(
+                        text = mensajeExito,
+                        color = Color.Green,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
+                if (mensajeError.isNotEmpty()) {
+                    Text(
+                        text = mensajeError,
+                        color = Color.Red,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.height(5.dp)) // Añadir un espacio antes de la imagen
+
             }
 
             /*

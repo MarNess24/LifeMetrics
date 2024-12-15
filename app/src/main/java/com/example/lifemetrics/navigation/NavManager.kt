@@ -29,7 +29,6 @@ fun NavManager() {
     // Crear instancia de SessionManager
     val sessionManager = remember { SessionManager(context) }
 
-
     NavHost (
         navController = navController,
         startDestination = if (store.value == true) "login" else "Splash"
@@ -56,17 +55,32 @@ fun NavManager() {
             Login(navController, sessionManager)
         }
 
+//        composable("historial") {
+//            HistorialScreen(navController)
+//        }
 
-        composable("historial") {
-            HistorialScreen(navController)
+        composable("historial/{id}/{nombre}/{edad}/{sexo}/{peso}/{altura}"
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id") ?: ""
+            val nombre = backStackEntry.arguments?.getString("nombre") ?: ""
+            val edad = backStackEntry.arguments?.getString("edad") ?: ""
+            val sexo = backStackEntry.arguments?.getString("sexo") ?: ""
+            val peso = backStackEntry.arguments?.getString("peso") ?: ""
+            val altura = backStackEntry.arguments?.getString("altura") ?: ""
+            HistorialScreen(navController, id, nombre, edad, sexo, peso, altura)
         }
 
         composable("Pacientes") {
             DatosPacienteView(navController, sessionManager)
         }
 
-        composable("ControlDelDia") {
-            ControlDiaView(navController)
+//        composable("ControlDelDia") {
+//            ControlDiaView(navController)
+//        }
+
+        composable("ControlDelDia/{id}") { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id") ?: ""
+            ControlDiaView(navController, id)
         }
 
         // Pantalla de Login
