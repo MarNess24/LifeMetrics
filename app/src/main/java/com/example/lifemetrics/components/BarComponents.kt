@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.lifemetrics.actividad.cerrarSesion
+import com.example.lifemetrics.components.BotonIcono
 import com.example.lifemetrics.components.BotonNormal
 import com.example.lifemetrics.conexion.SessionManager
 
@@ -83,6 +85,45 @@ fun TitleBar( name: String, textColor: Color, backgroundColor: Color, image: Int
                     cerrarSesion(navController, sessionManager)
                 }
             }
+
+        }
+    }
+}
+
+@Composable
+fun TitleBarH(name: String, textColor: Color, backgroundColor: Color, image: Int, navController: NavController) {
+    Box (
+        modifier = Modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
+            .background(backgroundColor)
+            .height(150.dp)
+            .padding(16.dp),
+
+        ) {
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+
+            BotonIcono(icono = Icons.Default.ArrowBack) {
+                navController.popBackStack()
+            }
+
+            // Imagen
+            Image (
+                painter = painterResource ( id = image ),
+                contentDescription = "Logo",
+                modifier = Modifier.size( 100.dp)
+            )
+
+            // Título
+            Text (
+                text = name,
+                fontSize = 25.sp,
+                fontWeight = FontWeight.Bold,
+                color = textColor
+            )
 
         }
     }

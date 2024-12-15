@@ -35,6 +35,7 @@ import com.example.lifemetrics.R
 import com.example.lifemetrics.actividad.obtenerRegistros
 import com.example.lifemetrics.data.Registro
 import com.example.navigateprojects.components.CardHistorial
+import com.example.navigateprojects.components.TitleBarH
 
 @Composable
 fun HistorialScreen(navController: NavController, id: String, nombre: String, edad: String, sexo: String, peso: String, altura: String) {
@@ -53,7 +54,7 @@ fun HistorialScreen(navController: NavController, id: String, nombre: String, ed
         modifier = Modifier
             .fillMaxSize()
     ) {
-
+        // Imagen de fondo
         Image(
             painter = painterResource(id = R.drawable.item1),
             contentDescription = "Imagen1",
@@ -61,35 +62,23 @@ fun HistorialScreen(navController: NavController, id: String, nombre: String, ed
             contentScale = ContentScale.Crop
         )
 
-
+        // Contenido principal
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
         ) {
-
-            IconButton(
-                onClick = { navController.popBackStack() },
-                modifier = Modifier
-                    .padding(bottom = 16.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Regresar",
-                    tint = Color(0xFF5A5A5A),
-                    modifier = Modifier.size(30.dp)
-                )
-            }
-
-
-            Text(
-                text = "HISTORIAL",
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                color = Color(0xFF5A5A5A)
+            // Título en la parte superior
+            TitleBarH(
+                name = "Historial",
+                textColor = Color(0xFF49688D),
+                backgroundColor = Color(0xFFB0C1D9),
+                image = R.drawable.logo,
+                navController = navController
             )
 
+            // Espaciado después del título
             Spacer(modifier = Modifier.height(16.dp))
+
 
             Column {
                 Text(text = "Nombre: ${nombre}", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
@@ -121,11 +110,11 @@ fun HistorialScreen(navController: NavController, id: String, nombre: String, ed
                 ) {
                     items(registros) { Registro ->
                         CardHistorial(
-                            fecha = "",
-                            Hora = "",
-                            glucosa = "",
-                            ArterialS = "",//Registro.presionSistolica,
-                            ArterialD = "",//Registro.presionDiastolica
+                            fecha = Registro.fecha,
+                            Hora =  Registro.hora,
+                            glucosa = Registro.glucosa,
+                            ArterialS = Registro.presionS,//Registro.presionSistolica,
+                            ArterialD = ""//Registro.presionDiastolica
                         )
                     }
                 }

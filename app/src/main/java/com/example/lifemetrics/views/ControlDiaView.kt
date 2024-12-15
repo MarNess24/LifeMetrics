@@ -270,36 +270,36 @@ fun ContentControlDiaView(navController: NavController, id: String) {
     }
 }
 
-    // Función para mostrar el DatePicker
-    fun showDatePicker(context: android.content.Context, onDateSelected: (String) -> Unit) {
-        val calendar = Calendar.getInstance()
-        val datePickerDialog = DatePickerDialog(
-            context,
-            { _, year, month, dayOfMonth ->
-                val selectedDate = "$dayOfMonth/${month + 1}/$year"  // Formato de fecha
-                onDateSelected(selectedDate)
-            },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        )
-        datePickerDialog.show()
-    }
+// Función para mostrar el DatePicker
+fun showDatePicker(context: android.content.Context, onDateSelected: (String) -> Unit) {
+    val calendar = Calendar.getInstance()
+    val datePickerDialog = DatePickerDialog(
+        context,
+        { _, year, month, dayOfMonth ->
+            val selectedDate = "$dayOfMonth/${month + 1}/$year"  // Formato de fecha
+            onDateSelected(selectedDate)
+        },
+        calendar.get(Calendar.YEAR),
+        calendar.get(Calendar.MONTH),
+        calendar.get(Calendar.DAY_OF_MONTH)
+    )
+    datePickerDialog.show()
+}
 
-    // Función para mostrar el TimePicker
-    fun showTimePicker(context: android.content.Context, onTimeSelected: (String) -> Unit) {
-        val calendar = Calendar.getInstance()
-        val timePickerDialog = TimePickerDialog(
-            context,
-            { _, hourOfDay, minute ->
-                val selectedTime = String.format("%02d:%02d", hourOfDay, minute)  // Formato de hora
-                onTimeSelected(selectedTime)
-            },
-            calendar.get(Calendar.HOUR_OF_DAY),
-            calendar.get(Calendar.MINUTE),
-            true
-        )
-        timePickerDialog.show()
-    }
+// Función para mostrar el TimePicker
+fun showTimePicker(context: android.content.Context, onTimeSelected: (String) -> Unit) {
+    val calendar = Calendar.getInstance()
+    val timePickerDialog = TimePickerDialog(
+        context,
+        { _, hourOfDay, minute ->
+            val selectedTime = String.format("%02d:%02d", hourOfDay, minute)  // Formato de hora
+            onTimeSelected(selectedTime)
+        },
+        calendar.get(Calendar.HOUR_OF_DAY),
+        calendar.get(Calendar.MINUTE),
+        true
+    )
+    timePickerDialog.show()
+}
 
 

@@ -163,7 +163,6 @@ fun DatosPacienteView(navController: NavController, sessionManager: SessionManag
                         readOnly = false
                     )
 
-
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))

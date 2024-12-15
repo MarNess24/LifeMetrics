@@ -11,8 +11,8 @@ data class Registro(
     val fecha: String,
     val hora: String,
     val glucosa: String,
-    val presionSistolica: String,
-    val presionDiastolica: String,
+    val presionS: String,
+    val presionD: String,
     val pacienteId: String
 )
 
