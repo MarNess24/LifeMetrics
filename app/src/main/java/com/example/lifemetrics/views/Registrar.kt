@@ -19,15 +19,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.lifemetrics.R
-import com.example.lifemetrics.actividad.iniciarSesion
 import com.example.lifemetrics.actividad.registrarse
 import com.example.lifemetrics.conexion.SessionManager
 import com.example.navigateprojects.components.MainButtonH
+import com.example.navigateprojects.components.PasswordTextField
 import com.example.navigateprojects.components.Space
-import com.example.navigateprojects.components.TextFields
+import com.example.navigateprojects.components.TextFields2
 
 @Composable
 fun RegistrarView(navController: NavController, sessionManager: SessionManager) {
@@ -64,20 +65,20 @@ fun RegistrarView(navController: NavController, sessionManager: SessionManager) 
             )
 
             // Campo de texto para el correo
-            TextFields(
+            TextFields2(
                 value = email,
                 onValueChange = { email = it },
-                label = "Correo"
+                label = "Correo",
+                keyboardType = KeyboardType.Email
             )
 
             Space()
 
-            // Campo de texto para la contraseña
-            TextFields(
+
+            PasswordTextField(
                 value = contrasena,
                 onValueChange = { contrasena = it },
-                label = "Contraseña",
-                // visualTransformation = PasswordVisualTransformation()
+                label = "Contraseña"
             )
 
             Space()

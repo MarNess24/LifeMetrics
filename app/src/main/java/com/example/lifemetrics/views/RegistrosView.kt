@@ -93,7 +93,7 @@ fun RegistrosView(navController: NavController, sessionManager: SessionManager) 
         // Botón "Agregar"
         FloatingActionButton (
             onClick = { navController.navigate("Pacientes") },
-            containerColor = Color ( 0xFF6481C1 ),
+            containerColor =  Color(138, 162, 212),
             contentColor = Color.White,
             shape = CircleShape,
             modifier = Modifier

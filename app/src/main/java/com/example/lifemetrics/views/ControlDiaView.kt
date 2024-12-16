@@ -14,9 +14,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -47,7 +50,12 @@ import java.util.Calendar
 fun ControlDiaView(navController: NavController, id: String) {
     Scaffold {
         Box(modifier = Modifier.fillMaxSize()) {
-
+            Image(
+                painter = painterResource(id = R.drawable.item5),
+                contentDescription = "Imagen1",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -63,21 +71,21 @@ fun ControlDiaView(navController: NavController, id: String) {
                 Image(
                     painter = painterResource(id = R.drawable.registro),
                     contentDescription = "registro",
-                    modifier = Modifier.size(250.dp)  // Ajusta el tamaño de la imagen
+                    modifier = Modifier.size(150.dp)  // Ajusta el tamaño de la imagen
                 )
 
 
                 ContentControlDiaView(navController, id)
             }
-            Image(
-                painter = painterResource(id = R.drawable.piepagcontroldia),
-                contentDescription = "piepag",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(90.dp)
-                    .align(Alignment.BottomCenter),
-                contentScale = ContentScale.Crop
-            )
+//            Image(
+//                painter = painterResource(id = R.drawable.piepagcontroldia),
+//                contentDescription = "piepag",
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(90.dp)
+//                    .align(Alignment.BottomCenter),
+//                contentScale = ContentScale.Crop
+//            )
         }
     }
 }
@@ -134,14 +142,45 @@ fun ContentControlDiaView(navController: NavController, id: String) {
             Spacer(modifier = Modifier.height(16.dp))
 
             // Campo de texto para la fecha con un botón para abrir el DatePicker
+//            OutlinedTextField(
+//                value = fecha,
+//                onValueChange = { },
+//                label = { Text("Fecha") },
+//                modifier = Modifier
+//                    .align(Alignment.CenterHorizontally)
+//                    .clickable { showDatePicker(context, { selectedDate -> fecha = selectedDate }) },
+//                readOnly = true,  // Hace que el campo sea solo lectura
+//                colors = TextFieldDefaults.outlinedTextFieldColors(
+//                    focusedBorderColor = Color(0xFF49688d),
+//                    unfocusedBorderColor = Color(0xFF8aa2d4),
+//                    focusedLabelColor = Color(0xFF49688d),
+//                    unfocusedLabelColor = Color(0xFF8aa2d4),
+//                )
+//            )
+
             OutlinedTextField(
                 value = fecha,
                 onValueChange = { },
                 label = { Text("Fecha") },
+                readOnly = true,  // Campo de solo lectura
                 modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .clickable { showDatePicker(context, { selectedDate -> fecha = selectedDate }) },
-                readOnly = true,  // Hace que el campo sea solo lectura
+                    .clickable {
+                        showDatePicker(context) { selectedDate ->
+                            fecha = selectedDate
+                        }
+                    },
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.DateRange, // Icono de calendario
+                        contentDescription = "Seleccionar fecha",
+                        tint = Color(0xFF49688d),
+                        modifier = Modifier.clickable {
+                            showDatePicker(context) { selectedDate ->
+                                fecha = selectedDate
+                            }
+                        }
+                    )
+                },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color(0xFF49688d),
                     unfocusedBorderColor = Color(0xFF8aa2d4),
@@ -153,14 +192,45 @@ fun ContentControlDiaView(navController: NavController, id: String) {
             Spacer(modifier = Modifier.height(16.dp))
 
             // Campo de texto para la hora con un botón para abrir el TimePicker
+//            OutlinedTextField(
+//                value = hora,
+//                onValueChange = { },
+//                label = { Text("Hora") },
+//                modifier = Modifier
+//                    .align(Alignment.CenterHorizontally)
+//                    .clickable { showTimePicker(context, { selectedTime -> hora = selectedTime }) },
+//                readOnly = true,  // Hace que el campo sea solo lectura
+//                colors = TextFieldDefaults.outlinedTextFieldColors(
+//                    focusedBorderColor = Color(0xFF49688d),
+//                    unfocusedBorderColor = Color(0xFF8aa2d4),
+//                    focusedLabelColor = Color(0xFF49688d),
+//                    unfocusedLabelColor = Color(0xFF8aa2d4),
+//                )
+//            )
+
             OutlinedTextField(
                 value = hora,
                 onValueChange = { },
                 label = { Text("Hora") },
+                readOnly = true,  // Campo de solo lectura
                 modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .clickable { showTimePicker(context, { selectedTime -> hora = selectedTime }) },
-                readOnly = true,  // Hace que el campo sea solo lectura
+                    .clickable {
+                        showTimePicker(context) { selectedTime ->
+                            hora = selectedTime
+                        }
+                    },
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.DateRange, // Icono de reloj
+                        contentDescription = "Seleccionar hora",
+                        tint = Color(0xFF49688d),
+                        modifier = Modifier.clickable {
+                            showTimePicker(context) { selectedTime ->
+                                hora = selectedTime
+                            }
+                        }
+                    )
+                },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color(0xFF49688d),
                     unfocusedBorderColor = Color(0xFF8aa2d4),
@@ -168,6 +238,7 @@ fun ContentControlDiaView(navController: NavController, id: String) {
                     unfocusedLabelColor = Color(0xFF8aa2d4),
                 )
             )
+
 
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(
@@ -222,7 +293,7 @@ fun ContentControlDiaView(navController: NavController, id: String) {
                     presionDiastolica = presiondiastolica,
                     onSuccess = {
                         // Mensaje de éxito o navegación
-                        mensajeExito = "Registro registrado exitosamente"
+                        mensajeExito = ""
                         mensajeError = ""
                         navController.popBackStack()
                     },
@@ -235,12 +306,13 @@ fun ContentControlDiaView(navController: NavController, id: String) {
             },
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF8aa2d4)
+                    containerColor = Color(138,162,212)
                 )) {
                 Text(
                     text = "Registrar",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp
+                    fontSize = 24.sp,
+                    color = Color.White
                 )
                 Spacer(modifier = Modifier.height(5.dp)) // Añadir un espacio antes de la imagen
                 // Mostrar mensajes de error o éxito

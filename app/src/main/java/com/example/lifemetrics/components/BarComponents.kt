@@ -133,7 +133,7 @@ fun TitleBarC(navController: NavController) {
         modifier = Modifier
             .fillMaxWidth()
             .statusBarsPadding()
-            .height(100.dp)
+            .height(50.dp)
             .padding(0.dp),
 
         ) {

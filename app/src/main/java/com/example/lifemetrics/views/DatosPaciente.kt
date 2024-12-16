@@ -96,6 +96,12 @@ fun DatosPacienteView(navController: NavController, sessionManager: SessionManag
 
     Scaffold {
         Box(modifier = Modifier.fillMaxSize()) {
+            Image(
+                painter = painterResource(id = R.drawable.item5),
+                contentDescription = "Imagen1",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -103,7 +109,6 @@ fun DatosPacienteView(navController: NavController, sessionManager: SessionManag
                     .verticalScroll(rememberScrollState()),  // Hacemos que la columna sea desplazable
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
         //Flechita para regresar uwu
                 TitleBarC(
                     navController = navController
@@ -112,7 +117,7 @@ fun DatosPacienteView(navController: NavController, sessionManager: SessionManag
                 Image(
                     painter = painterResource(id = R.drawable.registro),
                     contentDescription = "registro",
-                    modifier = Modifier.size(200.dp)  // Ajusta el tamaño de la imagen
+                    modifier = Modifier.size(150.dp)  // Ajusta el tamaño de la imagen
                 )
                 Text(
                     text = "Ingresa los datos del paciente",
@@ -276,13 +281,14 @@ fun DatosPacienteView(navController: NavController, sessionManager: SessionManag
                     },
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF8aa2d4)
+                        containerColor = Color(138,162,212)
                     )
                 ) {
                     Text(
                         text = "Registrar",
                         fontWeight = FontWeight.Bold,
-                        fontSize = 24.sp
+                        fontSize = 24.sp,
+                        color = Color.White
                     )
                 }
 
@@ -307,15 +313,15 @@ fun DatosPacienteView(navController: NavController, sessionManager: SessionManag
                 Spacer(modifier = Modifier.height(100.dp))  // Asegúrate de dejar espacio suficiente antes de la imagen
 
             }
-            Image(
-                painter = painterResource(id = R.drawable.piepagcontroldia),
-                contentDescription = "piepag",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(90.dp)
-                    .align(Alignment.BottomCenter),
-                contentScale = ContentScale.Crop
-            )
+//            Image(
+//                painter = painterResource(id = R.drawable.piepagcontroldia),
+//                contentDescription = "piepag",
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(90.dp)
+//                    .align(Alignment.BottomCenter),
+//                contentScale = ContentScale.Crop
+//            )
         }
     }
 }
