@@ -1,12 +1,25 @@
 package com.example.lifemetrics.views
 
-import androidx.compose.foundation.rememberScrollState
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,6 +38,7 @@ import com.example.lifemetrics.R
 import com.example.lifemetrics.actividad.registrarPaciente
 import com.example.lifemetrics.conexion.SessionManager
 import com.example.lifemetrics.data.Paciente
+import com.example.navigateprojects.components.TitleBarC
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -89,10 +103,16 @@ fun DatosPacienteView(navController: NavController, sessionManager: SessionManag
                     .verticalScroll(rememberScrollState()),  // Hacemos que la columna sea desplazable
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
+
+                TitleBarC(
+                    navController = navController
+                )
+
                 Image(
                     painter = painterResource(id = R.drawable.registro),
                     contentDescription = "registro",
-                    modifier = Modifier.size(250.dp)  // Ajusta el tamaño de la imagen
+                    modifier = Modifier.size(200.dp)  // Ajusta el tamaño de la imagen
                 )
                 Text(
                     text = "Ingresa los datos del paciente",

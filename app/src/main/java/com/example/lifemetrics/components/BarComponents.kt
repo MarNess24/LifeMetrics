@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -35,7 +34,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.lifemetrics.actividad.cerrarSesion
 import com.example.lifemetrics.components.BotonIcono
-import com.example.lifemetrics.components.BotonNormal
 import com.example.lifemetrics.conexion.SessionManager
 
 @Composable
@@ -124,6 +122,30 @@ fun TitleBarH(name: String, textColor: Color, backgroundColor: Color, image: Int
                 fontWeight = FontWeight.Bold,
                 color = textColor
             )
+
+        }
+    }
+}
+
+@Composable
+fun TitleBarC(navController: NavController) {
+    Box (
+        modifier = Modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
+            .height(100.dp)
+            .padding(0.dp),
+
+        ) {
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+
+            BotonIcono(icono = Icons.Default.ArrowBack) {
+                navController.popBackStack()
+            }
+
 
         }
     }

@@ -1,10 +1,12 @@
 package com.example.lifemetrics.actividad
 
+//import android.telecom.Call
+//import retrofit2.Call
+//import retrofit2.Callback
 import com.example.lifemetrics.conexion.RetrofitClient
 import com.example.lifemetrics.data.Registro
 import com.example.lifemetrics.data.RegistroApi
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
 fun obtenerRegistros(
@@ -15,7 +17,7 @@ fun obtenerRegistros(
     val registroApi = RetrofitClient.instance.create(RegistroApi::class.java)
     val body = mapOf("id" to pacienteId) // Crear el cuerpo de la solicitud con el ID
 
-    registroApi.obtenerRegistros(body).enqueue(object : Callback<List<Registro>> {
+    registroApi.obtenerRegistros(body).enqueue(object : retrofit2.Callback<List<Registro>> {
         override fun onResponse(call: Call<List<Registro>>, response: Response<List<Registro>>) {
             if (response.isSuccessful) {
                 response.body()?.let(onSuccess) ?: onError("La respuesta del servidor está vacía")
@@ -51,7 +53,7 @@ fun enviarRegistro(
         "presionD" to presionDiastolica
     )
 
-    api.crearRegistro(body).enqueue(object : Callback<Unit> {
+    api.crearRegistro(body).enqueue(object : retrofit2.Callback<Unit> {
         override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
             if (response.isSuccessful) {
                 onSuccess()
