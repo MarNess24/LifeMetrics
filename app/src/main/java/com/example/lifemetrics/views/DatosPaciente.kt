@@ -109,6 +109,7 @@ fun DatosPacienteView(navController: NavController, sessionManager: SessionManag
                     .verticalScroll(rememberScrollState()),  // Hacemos que la columna sea desplazable
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+              
         //Flechita para regresar uwu
                 TitleBarC(
                     navController = navController

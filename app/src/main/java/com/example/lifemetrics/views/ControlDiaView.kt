@@ -56,6 +56,7 @@ fun ControlDiaView(navController: NavController, id: String) {
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -86,6 +87,7 @@ fun ControlDiaView(navController: NavController, id: String) {
 //                    .align(Alignment.BottomCenter),
 //                contentScale = ContentScale.Crop
 //            )
+
         }
     }
 }
