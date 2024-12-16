@@ -104,7 +104,7 @@ fun DatosPacienteView(navController: NavController, sessionManager: SessionManag
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-        //Flechita para regresar
+        //Flechita para regresar uwu
                 TitleBarC(
                     navController = navController
                 )
