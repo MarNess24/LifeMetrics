@@ -76,9 +76,9 @@ fun HistorialScreen(navController: NavController, id: String, nombre: String, ed
 
             Column {
                 Text(text = "Nombre: ${nombre}", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
-                Text(text = "Edad: ${edad}", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
+                Text(text = "Edad: ${edad} años", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
                 Text(text = "Sexo: ${sexo}", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
-                Text(text = "Peso: ${peso}", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
+                Text(text = "Peso: ${peso} kg", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
                 Text(text = "Altura: ${altura}m", fontWeight = FontWeight.Bold, color = Color(0xFF5A5A5A))
             }
 
