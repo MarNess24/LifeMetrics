@@ -1,5 +1,6 @@
 package com.example.lifemetrics.views
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,20 +21,31 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.lifemetrics.R
+import com.example.lifemetrics.actividad.eliminarPaciente
+import com.example.lifemetrics.actividad.obtenerPacientes
+import com.example.lifemetrics.conexion.SessionManager
+import com.example.lifemetrics.data.Paciente
 import com.example.navigateprojects.components.PersonCard
 import com.example.navigateprojects.components.SpaceH
 import com.example.navigateprojects.components.TitleBar
 
 @Composable
-fun RegistrosView() {
+fun RegistrosView(navController: NavController, sessionManager: SessionManager) {
     Box (
         modifier = Modifier
             .fillMaxSize()
@@ -41,11 +53,10 @@ fun RegistrosView() {
     ) {
         // Imagen de fondo
         Image (
-            painter = painterResource ( id = R.drawable.item2 ),
-            contentDescription = "Detalle izquierdo",
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomStart)
+            painter = painterResource(id = R.drawable.item2),
+            contentDescription = "Imagen1",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
         )
 
         Column (
@@ -56,7 +67,9 @@ fun RegistrosView() {
                 name = "Control Diabetes",
                 textColor = Color ( 0xFF49688D ),
                 backgroundColor = Color ( 0xFFB0C1D9 ),
-                image = R.drawable.logo
+                image = R.drawable.logo,
+                navController,
+                sessionManager
             )
 
             SpaceH ( 20.dp)
@@ -74,19 +87,19 @@ fun RegistrosView() {
             SpaceH ( 20.dp )
 
             // Usuarios registrados desde la cuenta actual
-            Registros()
+            Registros(navController, sessionManager)
         }
 
         // Botón "Agregar"
         FloatingActionButton (
-            onClick = { /* Códigou */ },
+            onClick = { navController.navigate("Pacientes") },
             containerColor = Color ( 0xFF6481C1 ),
             contentColor = Color.White,
             shape = CircleShape,
             modifier = Modifier
-                .size ( 80.dp )
-                .align ( Alignment.BottomEnd )
-                .offset ( y = -85.dp, x = -40.dp )
+                .size(80.dp)
+                .align(Alignment.BottomEnd)
+                .offset(y = -85.dp, x = -40.dp)
         ) {
             Icon (
                 imageVector = Icons.Default.Add,
@@ -101,31 +114,109 @@ fun RegistrosView() {
             fontSize = 20.sp,
             color = Color ( 0xFF49688D ),
             modifier = Modifier
-                .align ( Alignment.BottomEnd )
-                .padding ( end = 43.dp, bottom = 170.dp )
+                .align(Alignment.BottomEnd)
+                .padding(end = 43.dp, bottom = 170.dp)
         )
     }
 }
 
 @Composable
-fun Registros() {
-    // Registros del usuario actual
-    val people = listOf ( "Menganito", "María", "Luna", "Mariana", "Scar", "Karla", "Secretaria" )
+fun Registros(navController: NavController, sessionManager: SessionManager) {
+    var pacientes by remember { mutableStateOf<List<Paciente>>(emptyList()) }
+    var errorMessage by remember { mutableStateOf("") }
 
-    Column (
+    // Llama a la API para obtener los registros
+    LaunchedEffect(Unit) {
+        val token = sessionManager.getToken()
+        if (token != null) {
+            obtenerPacientes(
+                token = token,
+                onSuccess = { pacientes = it },
+                onError = { errorMessage = it }
+            )
+        } else {
+            errorMessage = "Sesión no válida. Por favor, inicia sesión de nuevo."
+        }
+    }
+
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding ( horizontal = 16.dp )
-            .height ( 375.dp )
+            .padding(horizontal = 16.dp)
+            .height(375.dp)
     ) {
-        LazyColumn (
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy ( 8.dp )
-        ) {
-            items ( people ) { name ->
-                PersonCard ( name = name )
+        if (errorMessage.isNotEmpty()) {
+            Text(
+                text = errorMessage,
+                color = Color.Red,
+                modifier = Modifier.padding(8.dp)
+            )
+        } else if (pacientes.isEmpty()) {
+            Text(
+                text = "No hay pacientes registrados",
+                modifier = Modifier.padding(8.dp),
+                color = Color.Gray
+            )
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(pacientes) { paciente ->
+                    PersonCard(
+                        name = paciente.nombre ?: "Sin nombre",
+                        navController = navController,
+                        id = paciente.id,
+                        edad = paciente.edad,
+                        sexo = paciente.sexo,
+                        peso = paciente.peso,
+                        altura = paciente.altura,
+                        sessionManager = sessionManager,
+                        onEliminar = { id ->
+                            eliminarPaciente(
+                                token = sessionManager.getToken() ?: "",
+                                id = id,
+                                onSuccess = {
+                                    pacientes = pacientes.filter { it.id != id } // Actualizar la lista local
+                                },
+                                onError = { mensajeError ->
+                                    errorMessage = mensajeError // Mostrar error si ocurre
+                                }
+                            )
+                        },
+                            onHistorial = { id, nombre, edad, sexo, peso, altura ->
+                                val encodedNombre = Uri.encode(nombre)
+                                navController.navigate("historial/$id/$encodedNombre/$edad/$sexo/$peso/$altura")
+                                          },
+                        onRegistro = {id -> navController.navigate("ControlDelDia/${id}")}
+                    )
+                }
             }
+
         }
     }
 }
+
+
+//@Composable
+//fun Registros( navController: NavController) {
+//    // Registros del usuario actual
+//    val people = listOf ( "Menganito", "María", "Luna", "Mariana", "Scar", "Karla", "Secretaria" )
+//
+//    Column (
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding ( horizontal = 16.dp )
+//            .height ( 375.dp )
+//    ) {
+//        LazyColumn (
+//            modifier = Modifier
+//                .fillMaxSize(),
+//            verticalArrangement = Arrangement.spacedBy ( 8.dp )
+//        ) {
+//            items ( people ) { name ->
+//                PersonCard ( name = name , navController )
+//            }
+//        }
+//    }
+//}

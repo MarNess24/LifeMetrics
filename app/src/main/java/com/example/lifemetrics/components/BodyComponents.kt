@@ -52,6 +52,16 @@ fun MainButton(name:String, backColor: Color, color: Color, onClick:() -> Unit){
     }
 }
 
+@Composable
+fun MainButtonH(name:String, backColor: Color, color: Color, size: Dp, onClick:() -> Unit){
+    Button(onClick = onClick, colors = ButtonDefaults.buttonColors(
+        contentColor = color,
+        containerColor = backColor
+    ) ) {
+        Text(text = name)
+    }
+}
+
 
 @Composable
 fun TextFields(value:String, onValueChange: (String) -> Unit, label: String)

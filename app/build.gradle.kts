@@ -2,7 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
 }
-
+//hola mundo
+//yeison
 android {
     namespace = "com.example.lifemetrics"
     compileSdk = 35
@@ -68,6 +69,14 @@ dependencies {
     implementation("com.airbnb.android:lottie-compose:5.2.0")
     implementation("androidx.navigation:navigation-compose:2.5.3")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+    //implementaciones de retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    implementation ("androidx.appcompat:appcompat:1.6.1")
+    implementation(libs.firebase.crashlytics.buildtools)
+
+
     // Fin implementaciones
 
     testImplementation(libs.junit)
